@@ -18,8 +18,7 @@ public class BruteForceCracker {
 	
 	public static void main(String[] args) {
 		System.out.println("Starting Brute Force Checker");
-		startTime = System.currentTimeMillis();
-			new Thread(() -> {
+			Thread t1 = new Thread(()-> { 
 				int ctr = 0;
 				while(checkCode(ctr)==false) {
 				ctr++;
@@ -28,7 +27,42 @@ public class BruteForceCracker {
 				elapsedTime = (float)(endTime - startTime);
 				elapsedTime /= 1000.f;
 				System.out.println("Total time taken: " + elapsedTime + " seconds");
-			}).start();
+			});
+			
+			Thread t2 = new Thread(() -> {
+				int ctr = 10000;
+				while(checkCode(ctr)==false) {
+				ctr++;
+				}
+				endTime = System.currentTimeMillis();
+				elapsedTime = (float)(endTime - startTime);
+				elapsedTime /= 1000.f;
+				System.out.println("Total time taken: " + elapsedTime + " seconds");
+			});
+			
+			Thread t3 = new Thread(() -> {
+				int ctr = 10000000;
+				while(checkCode(ctr)==false) {
+				ctr++;
+				}
+				endTime = System.currentTimeMillis();
+				elapsedTime = (float)(endTime - startTime);
+				elapsedTime /= 1000.f;
+				System.out.println("Total time taken: " + elapsedTime + " seconds");
+			});
+			startTime = System.currentTimeMillis();
+			t1.start();
+			t2.start();
+			t3.start();
+			try {
+				t1.join();
+				t2.join();
+				t3.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		
 	}
 	
